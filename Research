@@ -1,0 +1,193 @@
+Project Research Document - Cineview
+
+X00090113 - Rhys Coleman
+
+October 3, 2014
+
+1 Detailed Discussion 
+
+The concept of my project is to provide an android mobile application to the public that would make 
+
+it easier for the user to organise their trips to the cinema to see their selected film.
+
+The mobile application will allow the user to initially set a distance on the application of the distance 
+
+they are willing to travel to visit a cinema this would be set to kilometres. The reason for this function 
+
+is the differences between all users, Some users are willing to travel further as they may have the use 
+
+of a motorised vehicle this will allow them to travel more of a distance compared with someone that 
+
+may depend on public transport or the ability to walk or cycle to their destination. 
+
+Once the initial distance is set up the user will be prompted to enter the film name into the 
+
+application. Once the user hit the search button the application will request the mobile device to get 
+
+the current location of the user using the built in GPS API of the device. After the location of the 
+
+mobile device is gathered the application will then plot a radius around the devices current location of 
+
+the distance that the user has set as the distance they have set on the application. 
+
+After this radius has been found and created the application will search through the database of 
+
+known cinemas and compare their GPS coordinates to the coordinates within the set radius of the 
+
+users location. 
+
+After all the cinemas in this radius have been found the application will then find the film searched by 
+
+the user within each cinemas website by using the cinemas url’s which will also be store in the 
+
+database. The application will the extract the viewing times for that film by using restful web services 
+
+to request the data needed which in terms of the application will be the viewing times for the film 
+
+that the user has searched.
+
+Once this data has been received the application will display it to the user in a user friendly graphical
+
+Interface.
+
+The accessibility of this application will be as easy as possible as the scope of users will be able to 
+
+range from a young child that is only learning to use a phone or mobile device to a senior citizen
+
+That wouldn’t be technically savvy.
+
+2 Existing Applications in this domain 
+
+Comparison Table 
+
+Cineview Cinema Guide Enterainment.ie Goggle 
+
+ 
+
+Mobile application 
+
+ 
+
+ 
+
+Multiple Cinemas 
+
+ 
+
+ 
+
+GPS 
+
+ 
+
+ 
+
+Distance controller 
+
+ 
+
+ 
+
+Film Search 
+
+ 
+
+ Yes Yes Yes No
+
+ Yes Yes Yes Yes
+
+ Yes No Yes No
+
+ Yes No No No
+
+ Yes Yes No Yes
+
+3 Platform, Technologies and Libraries 
+
+From my research this application could be built on any of the mobile platforms ( IOS, Android or 
+
+Windows). I am choosing to base my application on Android as I am most familiar with this 
+
+programing language. 
+
+ADT Bundle
+
+This is application development tool bundle. This contains all the SDK components
+
+and a version of Eclipse IDE that we would need for the development of the
+
+application. The key features of ADT Bundle are:
+
+* Android SDK Tools
+
+* Android Platform Tools
+
+* Eclipse + ADT Plugin
+
+* A system image for the emulator
+
+Android studio
+
+Like the ADT Bundle this is a development environment for android applications
+
+While it does provide all of the same functions plus more additional functionality this software is still 
+
+in beta testing which could cause some errors while attempting to develop my android application.
+
+Azure
+
+Windows Azure is a cloud platform. It can be used for building and maintaining
+
+applications. Any language, tool or framework can be used to build applications.
+
+SQL
+
+SQL is a language used for the design and management of data which is held in a relational DBMS. It 
+
+has the ability of insertion, deletion and the ability to update all the elements held in a database. It 
+
+also supports database queries in order to get information from the database.
+
+XML
+
+XML will be the main data format for the communication between the user’s mobile device and 
+
+Azure. We have chosen XML because it is robust due to the fact it is based on a proven standard and 
+
+provides a durable format for information storage and the transmission of that information. It also 
+
+provides a common syntax for messaging systems for the exchange of information between 
+
+applications. As well as this it is also free and makes code scalable.
+
+Json
+
+Json could be an alternative to XML as it is neater easier to read for humans.
+
+It is processed easier than XML as is structure is simpler.
+
+4 The risks 
+
+There are many possible risks to this project. 
+
+ Time constraints may not allow me to add all the functionality that I wish to best demonstrate
+
+my project to the best it can be.
+
+ Being an inexperienced android programmer could lead to 
+
+o Not programming in the most efficient manner available to the language.
+
+o Not using all the functionality available
+
+ The wifi/mobile data allowing me clear connectivity to communicate with my azure server
+
+and the webpages of the cinemas.
+
+ GPS location being accurate to ensure that the user is in the correct location.
+
+ The development tool to work correctly to allow me to program and debug my applications 
+
+code and functionality.
+
+ My testing devices having all the functionality I need.
