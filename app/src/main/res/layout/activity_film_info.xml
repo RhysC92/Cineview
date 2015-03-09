@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.rhys.cineview.FilmInfo"
+    android:background="@drawable/gradient">
+
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/BackButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="Title"
+    android:id="@+id/titleHead"
+    android:layout_below="@+id/BackButton"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/titleDisplay"
+        android:layout_below="@+id/titleHead"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Rating"
+        android:id="@+id/ratingHead"
+        android:layout_below="@+id/BackButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="88dp"
+        android:layout_marginEnd="88dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/ratingDisplay"
+        android:layout_below="@+id/ratingHead"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="88dp"
+        android:layout_marginEnd="88dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Run Time"
+        android:id="@+id/runTimeHead"
+        android:layout_below="@+id/titleDisplay"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/runTimeDisplay"
+        android:layout_below="@+id/runTimeHead"
+        android:layout_alignLeft="@+id/runTimeHead"
+        android:layout_alignStart="@+id/ratingDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Plot"
+        android:id="@+id/plotHead"
+        android:layout_below="@+id/runTimeDisplay"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/plotDisplay"
+        android:layout_below="@+id/plotHead"
+        android:layout_alignLeft="@+id/runTimeDisplay"
+        android:layout_alignStart="@+id/runTimeDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cast "
+        android:id="@+id/CastHead"
+        android:layout_below="@+id/plotDisplay"
+        android:layout_alignLeft="@+id/runTimeDisplay"
+        android:layout_alignStart="@+id/runTimeDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/CastDisplay"
+        android:layout_below="@+id/CastHead"
+        android:layout_alignLeft="@+id/runTimeDisplay"
+        android:layout_alignStart="@+id/runTimeDisplay" />
+
+
+
+
+</RelativeLayout>
+
