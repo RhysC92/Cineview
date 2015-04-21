@@ -8,5 +8,7 @@
     <string name="title_activity_cinema_times">CinemaTimesActivity</string>
     <string name="title_activity_film_info">FilmInfoActivity</string>
     <string name="search">search</string>
+    <string name="title_activity_sms">SmsActivity</string>
+    <string name="title_activity_contact">Contact</string>
 
 </resources>

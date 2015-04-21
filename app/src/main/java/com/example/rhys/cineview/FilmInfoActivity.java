@@ -43,7 +43,8 @@ public class FilmInfoActivity extends ActionBarActivity {
     TextView plotDisplay;
     TextView CastDisplay;
 
-    String text = " blank ";
+    //String text = " blank ";
+    String text = "focus";
     String title = " " ;
     String ageGroup= " " ;
     String runTime= " " ;
@@ -62,11 +63,6 @@ public class FilmInfoActivity extends ActionBarActivity {
         //reguests info from rottentomatoes on page startup
         new RequestTask().execute("http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=" + API_KEY + "&country=" + Country_Code + "&page_limit=" + MOVIE_PAGE_LIMIT);
         btnBack  = (Button) findViewById(R.id.BackButton);
-
-
-
-
-
 
         // Register button click event
         btnBack.setOnClickListener(new View.OnClickListener()

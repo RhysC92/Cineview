@@ -1,9 +1,12 @@
 package com.example.rhys.cineview;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import org.apache.http.HttpResponse;
@@ -19,11 +22,13 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rhys on 24/02/2015.
  */
-public class RtRequest {
+public class RtRequest extends Activity {
     // the Rotten Tomatoes API key of your application! get this from their website
     private static final String API_KEY = "mkptd89jc5m8wb8gwxr7h5ey";
 
@@ -40,15 +45,27 @@ public class RtRequest {
     // fetch the array of movies in the response
     JSONArray movies;
 
+    List<String> lstTitles = new ArrayList<String>();
+
+
+
 
 
     public RtRequest(Context context) {
+        //lstTitles.add("start");
 
         this.mContext = context;
+
         new RequestTask().execute("http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=" + API_KEY + "&country=" + Country_Code + "&page_limit=" + MOVIE_PAGE_LIMIT);
 
 
     }
+
+    public List<String> getList() {
+        return lstTitles;
+    }
+
+
 
 
     private class RequestTask extends AsyncTask<String, String, String>
@@ -112,6 +129,7 @@ public class RtRequest {
                         JSONObject movie = movies.getJSONObject(i);
 
                             String title = movie.getString("title");
+                            lstTitles.add(title);
                             String ageGroup = movie.getString("mpaa_rating");
                             String runTime = movie.getString("runtime");
                             String synopsis = movie.getString("synopsis");
@@ -146,7 +164,6 @@ public class RtRequest {
     }
 
     public String MoreInfoRequest(String MovieName) {
-        Log.i("TESTER","Got to exception");
         try
         {
             String MName = MovieName;

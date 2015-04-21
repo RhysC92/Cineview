@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -35,6 +36,18 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.rhys.cineview.CinemaTimesActivity" />
+        </activity>
+        <activity
+            android:name=".SmsActivity"
+            android:label="@string/title_activity_sms"
+            android:parentActivityName=".CinemaTimesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rhys.cineview.CinemaTimesActivity" />
+        </activity>
+        <activity
+            android:name=".Contact"
+            android:label="@string/title_activity_contact" >
         </activity>
     </application>
 

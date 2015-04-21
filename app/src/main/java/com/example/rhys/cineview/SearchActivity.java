@@ -4,39 +4,58 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+
+import java.net.MalformedURLException;
+import java.util.List;
 
 public class SearchActivity extends ActionBarActivity {
 
     Button btnSearch;
-    EditText SearchBox;
 
-    // GPSTracker class
+//Declaring all classes
     GPSTracker gps;
     RtRequest film;
     CinemaSearch Cinema;
+    azureMobDB mobData;
+
+    private MobileServiceClient mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        film = new RtRequest(SearchActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-        //Checks for Touch on text box
-        SearchBox  = (EditText) findViewById(R.id.inputSearchEditText);
-        SearchBox.setOnTouchListener(new View.OnTouchListener(){
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //film = new RtRequest(SearchActivity.this);
-                return false;
-            }
-        });
-
+        //checking that the azure mobile service can be communicated with
+        try {
+            mClient = new MobileServiceClient(
+                    "https://cineviewdata.azure-mobile.net/",
+                    "FaphWIwqLKFoFKBYIxxRZUjdrZNHkS70",
+                    this);
+            mobData = new azureMobDB(mClient);
+        }catch (MalformedURLException e)
+        {}
+        // list for the auto correct
+        List<String> filmList = film.getList();
+        //creating and setting seek bar for distance
+        final SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
+        final TextView seekBarValue = (TextView)findViewById(R.id.seekbarvalue);
+        seekBarValue.setText("10");
+        // text view with auto complete from film list
+        final AutoCompleteTextView autotextView = (AutoCompleteTextView) findViewById(R.id.autocomplete_title);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, filmList);
+        autotextView.setAdapter(adapter);
         //checks to see search button is pushed
         btnSearch  = (Button) findViewById(R.id.btnShowLocation);
         // Register button click event
@@ -44,49 +63,45 @@ public class SearchActivity extends ActionBarActivity {
         {
 
             public void onClick(View v) {
-                SearchBox  = (EditText) findViewById(R.id.inputSearchEditText);
-                gps = new GPSTracker(SearchActivity.this);
-                if(gps.canGetLocation()){
 
+                gps = new GPSTracker(SearchActivity.this);
+                //will only check data if location is active
+                if(gps.canGetLocation()){
+                    String title = autotextView.getEditableText().toString();
                     double latitude = gps.getLatitude();
                     double longitude = gps.getLongitude();
-
-                    }else{
-                    // can't get location
-                    // GPS or Network is not enabled
+                    int distance =  seekBar.getProgress();
+                    //create and send lat,long,distance and title of movie to cinemaSearch
+                    Cinema = new CinemaSearch(SearchActivity.this);
+                    Cinema.CinemaSearch(latitude,longitude,title,distance);
+                }else{
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
-                Cinema = new CinemaSearch(SearchActivity.this);
-                Intent i = new Intent(v.getContext(), CinemaTimesActivity.class);
-                i.putExtra("title",SearchBox.getText().toString());
-                startActivity(i);
+            }
+        });
 
 
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                //changes distance displayed every time seek bar is moved
+                seekBarValue.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
             }
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

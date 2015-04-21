@@ -1,8 +1,11 @@
 package com.example.rhys.cineview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -16,21 +19,42 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.rhys.cineview.GPSTracker;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by Rhys on 24/02/2015.
  */
-public class CinemaSearch
+public class CinemaSearch extends Activity
 {
+    //google places api key
     private static final String API_KEY = "AIzaSyCKg5KZhi5UK2CbeaAK3r7-_3CmJMN51AE";
+
+    private double latitude;
+    private double longitude;
+    private String title;
+    private int distance;
+    CinemaIDs CineID;
 
     private final Context mContext;
 
     public CinemaSearch(Context context) {
         this.mContext = context;
-        //new RequestTask().execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + Lat +"," + Long + "&radius=" + radius +"&types=movie_theater&key=" + API_KEY ");
-        new RequestTask().execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=53.287059491564335,-6.367207612255925&radius=500&types=movie_theater&key=" + API_KEY + "");
+        }
 
+    public void CinemaSearch(double latitude, double longitude, String title, int distance) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.title = title;
+        //km - meters
+        this.distance = distance*1000;
+        // request to google places
+        new RequestTask().execute("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.latitude  + "," + this.longitude + "&radius="+this.distance+"&types=movie_theater&key=" + API_KEY + "");
     }
 
     private class RequestTask extends AsyncTask<String, String, String>
@@ -64,7 +88,7 @@ public class CinemaSearch
             }
             catch (Exception e)
             {
-                Log.d("Test", "Couldn't make a successful request!");
+                Log.d("Test", "Couldn't make a successful request! here");
             }
             return responseString;
         }
@@ -83,19 +107,39 @@ public class CinemaSearch
                     // convert the String response to a JSON object,
                     // because JSON is the response format Rotten Tomatoes uses
                     JSONObject jsonResponse = new JSONObject(response);
-
                     // fetch the array of movies in the response
                     JSONArray movies = jsonResponse.getJSONArray("results");
 
+                    //Creates a list to store all the locations from the googlePlaces Api
+                    List<String> GoogleCinemaList = new ArrayList<String>();
 
-
+                    //Goes through all returns from the api
                     for (int i = 0; i < movies.length(); i++)
                     {
-                        //gets the title,age,runtime & synopsis of pulled in data
+
                         JSONObject movie = movies.getJSONObject(i);
                         String name = movie.getString("name");
+                        JSONObject geometry = movie.getJSONObject("geometry");
+                        JSONObject loco = geometry.getJSONObject("location");
+                        //Geting Long & Lat from google places
+                        String Long = loco.getString("lng");
+                        String Lat = loco.getString("lat");
+
+                        //Combines into one location string
+                        String Loc = Lat+","+Long;
+
+
+                        //Adds it to the list to be passed though
+                        GoogleCinemaList.add(Loc);
 
                     }
+
+                    //Passes through list of google places to be compared against entertainment cinemas
+                    CineID = new CinemaIDs(mContext);
+
+                    CineID.CinemaIDS(mContext, title, GoogleCinemaList);
+
+
                 }
                 catch (JSONException e)
                 {
